@@ -20,15 +20,8 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Find Project and Build APK
-      run: |
-        if [ -f "build.gradle" ]; then
-          gradle assembleDebug
-        else
-          BUILD_DIR=$(find . -maxdepth 2 -name "build.gradle" -not -path "*/app/*" -exec dirname {} \; | head -n 1)
-          echo "Building in directory: $BUILD_DIR"
-          cd "$BUILD_DIR" && gradle assembleDebug
-        fi
+    - name: Build Debug APK
+      run: gradle assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
